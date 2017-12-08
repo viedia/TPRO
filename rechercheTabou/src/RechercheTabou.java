@@ -1,15 +1,18 @@
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RechercheTabou {
     private Solution meilleur;
     private int nbTache;
     private int[][] reglages;
+    private ArrayList<int[]> tabou;
 
     public RechercheTabou(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
     }
 
     private void Initialisation(int nb, int[] reglage, int[] temps, int[] debut){
+        tabou = new ArrayList<>();
         nbTache = nb;
         Tache[] t = new Tache[nbTache];
         reglages = new int[nbTache][nbTache];
@@ -25,6 +28,33 @@ public class RechercheTabou {
         meilleur = new Solution();
         meilleur.majListe(t);
         System.out.println(meilleur.toString());
+    }
 
+    public void iteration(){
+        int[] echange = selectionEchange();
+        meilleur = new Solution(meilleur.inverser(echange[0], echange[1]));
+        System.out.println(meilleur.getTemps());
+    }
+    ///
+    /// tabous non implémenter
+    ///
+    private int[] selectionEchange(){
+        int[] couple = new int[2];
+        Solution temp = null;
+        int meilleurTps = meilleur.getTemps();
+        for(int i=0; i<nbTache-1; i++){
+            for(int j=0; j<nbTache; j++){
+                if(i!= j){
+                    temp = new Solution(meilleur.inverser(i,j));
+                    int diff =  meilleurTps- temp.getTemps();
+                    if(diff >0){ //si la nouvelle solution dure moins longtemps
+                        couple[0] = i;
+                        couple[1] = j;
+                        meilleurTps = temp.getTemps();
+                    }
+                }
+            }
+        }
+        return couple;
     }
 }
