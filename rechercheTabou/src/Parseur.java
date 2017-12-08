@@ -32,42 +32,19 @@ public class Parseur {
                         break;
                     }
                     case 2:{
-                        char pred = ' ';
-                        String val = "";
-                        int marque = 0;
-                        int[] listVal = new int[res.get("nombre")[0]];
-                        for(int i=0; i<ligne.length(); i++){ //pour tous les caharactères de la ligne
-                            if(ligne.charAt(i)!= ' '){ //si on lit un chiffre
-                                val = val.concat(ligne.substring(i, i+1));
-                            }else{//si un lit un espace
-                                if(pred != ' '){ //si on finit de lire une valeur
-                                    listVal[marque] = Integer.parseInt(val);
-                                    marque ++;
-                                    val = "";
-                                }
-                            }
-                            pred = ligne.charAt(i);
-                        }
+                        int[] listVal = this.parseLigne(ligne, res.get("nombre")[0]);
                         res.put("temps", listVal);
                         compteur++;
                         break;
-                    }default:{
-                        char pred = ' ';
-                        String val = "";
-                        int marque = 0;
-                        int[] nombres =new int[res.get("nombre")[0]];
-                        for(int i=0; i<ligne.length(); i++){ //pour tous les caharactères de la ligne
-                            if(ligne.charAt(i)!= ' '){ //si on lit un chiffre
-                                val = val.concat(ligne.substring(i, i+1));
-                            }else{//si un lit un espace
-                                if(pred != ' '){ //si on finit de lire une valeur
-                                    nombres[marque] = Integer.parseInt(val);
-                                    marque ++;
-                                    val = "";
-                                }
-                            }
-                            pred = ligne.charAt(i);
-                        }
+                    }
+                    case 3:{
+                        int[] listVal = this.parseLigne(ligne, res.get("nombre")[0]);
+                        res.put("debut", listVal);
+                        compteur++;
+                        break ;
+                    }
+                    default:{
+                        int[] nombres =this.parseLigne(ligne, res.get("nombre")[0]);
                         if(res.get("reglage") == null)
                             res.put("reglage", nombres);
                         else
@@ -100,5 +77,28 @@ public class Parseur {
         System.arraycopy(tab1, 0, tab3, 0, tab1.length);
         System.arraycopy(tab2, 0, tab3, tab1.length, tab2.length);
         return tab3;
+    }
+
+    private int[] parseLigne(String ligne, int nb){
+        char pred = ' ';
+        String val = "";
+        int marque = 0;
+        int[] listVal = new int[nb];
+        for(int i=0; i<ligne.length(); i++){ //pour tous les caharactères de la ligne
+            if(ligne.charAt(i)!= ' '){ //si on lit un chiffre
+                val = val.concat(ligne.substring(i, i+1));
+                if(i == ligne.length()-1){
+                    listVal[marque] = Integer.parseInt(val);
+                }
+            }else{//si un lit un espace
+                if(pred != ' '){ //si on finit de lire une valeur
+                    listVal[marque] = Integer.parseInt(val);
+                    marque ++;
+                    val = "";
+                }
+            }
+            pred = ligne.charAt(i);
+        }
+        return listVal;
     }
 }

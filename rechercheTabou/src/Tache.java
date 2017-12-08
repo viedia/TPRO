@@ -6,4 +6,9 @@ public class Tache {
         temps = tps;
         tpsDepart = depart;
     }
+
+    @Override
+    public String toString(){
+        return "temps = "+this.temps+" Debut : "+this.tpsDepart;
+    }
 }
