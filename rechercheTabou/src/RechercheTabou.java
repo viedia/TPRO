@@ -13,16 +13,18 @@ public class RechercheTabou {
         nbTache = nb;
         Tache[] t = new Tache[nbTache];
         reglages = new int[nbTache][nbTache];
-        for(int i = 0; i<nbTache; i++)
+        for(int i = 0; i<nbTache; i++) //boucle initialisation Taches et reglage
         {
-            t[i] = new Tache(temps[i], debut[i]);
-            System.out.println(t[i].toString());
-            for(int j=0; j<nbTache;j++){
+            t[i] = new Tache(i, temps[i], debut[i]);
+        //    System.out.println(t[i].toString());
+            for(int j=0; j<nbTache;j++){ //init matrice reglage
                 this.reglages[i][j] = reglage[nbTache*i+j];
-                System.out.println( reglage[nbTache*i+j]);
+          //      System.out.println( reglage[nbTache*i+j]);
             }
         }
         meilleur = new Solution();
+        meilleur.majListe(t);
+        System.out.println(meilleur.toString());
 
     }
 }

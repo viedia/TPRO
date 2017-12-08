@@ -23,7 +23,7 @@ public class Parseur {
             String ligne;
             int compteur = 1;
             while ((ligne=buff.readLine())!=null){
-                System.out.println(ligne);
+         //       System.out.println(ligne);
                 switch (compteur){
                     case 1: {
                         int[] tab = {Integer.parseInt(ligne.replaceAll(" ", ""))};
