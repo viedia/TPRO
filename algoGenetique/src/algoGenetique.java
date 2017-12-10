@@ -1,5 +1,7 @@
-//class algoGenetique
+class algoGenetique
+{
 
+}
 //Initialisation des variables
     //Liste d'individus
     //Une population
