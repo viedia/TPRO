@@ -1,17 +1,21 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Population {
 
-    private Individu[] membres;
+    private ArrayList<Individu> membres;
     private int taille = 15;
+    private final int NBSELECT = 20;
 
     public Population(Tache[] taches, int[][] reglages){
-        membres= new Individu[taille];
+        membres= new ArrayList<>(taille);
         for(int i=0; i<taille; i++){
             Tache[] copi = taches.clone();
             shuffleArray(copi);
-            membres[i] = new Individu(copi, reglages);
+            membres.add(new Individu(copi, reglages));
 
         }
     }
@@ -39,5 +43,26 @@ public class Population {
         }
         return affichahge;
     }
+
+    public Individu[] getMeilleurs() {
+        this.trier();
+        Individu[] meilleurs = new Individu[NBSELECT];
+        for(int i=0; i<NBSELECT; i++){
+            meilleurs[i] = membres.get(i);
+        }
+        return meilleurs;
+    }
+
+    private void trier(){
+  /*      ArrayList<Individu> temp = new ArrayList<>();
+        for(Individu i : membres){
+            temp.add(i);
+        }*/
+      //  System.out.println(temp.toString());
+        Collections.sort(membres);
+//        System.out.println(temp.toString());
+
+    }
+
 }
 

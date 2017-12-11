@@ -4,8 +4,10 @@ class algoGenetique
     private Population population;
 
 
+
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
+        this.selection();
     }
 
     private void Initialisation(int nb, int[] reglage, int[] temps, int[] debut) {
@@ -21,15 +23,20 @@ class algoGenetique
             }
         }
         population = new Population(t, reglages);
-        System.out.println(population.toString());
+        //System.out.println(population.toString());
+    }
+
+    private Individu[] selection(){
+        Individu[] meilleurs =  population.getMeilleurs();
+        return meilleurs;
     }
 
 }
 //Initialisation des variables
-    //Liste d'individus
-    //Une population
+    //Liste d'individus OK
+//Une population OK
 
-//Fonction initialisation de la population
+//Fonction initialisation de la population ok
     //Boucle i à TaillePop
         //ajouter les nouveaux individus
 

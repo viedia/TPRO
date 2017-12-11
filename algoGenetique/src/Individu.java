@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Individu {
+public class Individu implements Comparable {
     private HashMap<String, Tache> listeTaches = new HashMap<>();
     private int temps;
     private int[][] reglages;
@@ -30,6 +30,21 @@ public class Individu {
         for (Map.Entry<String, Tache> entry : listeTaches.entrySet()){
             affichage += entry.getKey()+" : "+entry.getValue().toString()+"\n";
         }
-        return affichage;
+        return String.valueOf(temps);//affichage;
+    }
+    public int getTemps() {
+        return temps;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o.getClass().equals(Individu.class)){
+
+            //Nous allons trier sur le nom d'artiste
+
+            Individu ind = (Individu) o;
+            return Integer.compare(this.temps, ind.getTemps());
+        }
+        return -1;
     }
 }
