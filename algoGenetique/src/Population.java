@@ -7,8 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Population {
 
     private ArrayList<Individu> membres;
-    private int taille = 15;
-    private final int NBSELECT = 20;
+    private int taille = 15; //taille de la population de base
+    private final int NBSELECT = 20;  // nombre d'individus qu'on séléctionne après les op
 
     public Population(Tache[] taches, int[][] reglages){
         membres= new ArrayList<>(taille);

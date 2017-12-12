@@ -3,8 +3,6 @@ class algoGenetique
 {
     private Population population;
 
-
-
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
         this.selection();

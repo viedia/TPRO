@@ -26,6 +26,7 @@ public class RechercheTabou {
             }
         }
         meilleur = new Solution();
+        Solution.setReglages(reglages);
         meilleur.majListe(t);
         System.out.println(meilleur.toString());
     }
