@@ -5,8 +5,8 @@ public class Population {
 
     private ArrayList<Individu> membres;
 
-    private final int TAILLE = 30; //taille de la population de base
-    private final int NBSELECT = 11; // nombre d'individus qu'on séléctionne après les op
+    private final int TAILLE = 100; //taille de la population de base
+    private final int NBSELECT = 20; // nombre d'individus qu'on séléctionne après les op
     private final double PROBAMUTATION = 0.3;
 
 
@@ -81,8 +81,9 @@ public class Population {
 
     private Tache[] faireEnfant(HashMap<String, Tache> parent, int pos, int pos2){
         Tache[] res = parent.values().toArray(new Tache[parent.values().size()]);
-        res[pos]  =parent.get(String.valueOf(pos2));
-        res[pos2] = parent.get(String.valueOf(pos));
+        Tache temp = res[pos];
+        res[pos]  =res[pos2];
+        res[pos2] = temp;
         Random rand = ThreadLocalRandom.current();
         double proba = rand.nextDouble();
         if(proba<PROBAMUTATION){

@@ -3,13 +3,14 @@ import java.util.Map;
 class algoGenetique
 {
     private Population population;
-    private final int NBGENERATION = 10;
+    private final int NBGENERATION = 500;
 
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
         for (int g=0; g<NBGENERATION; g++) {
+            System.out.println("#######GENERATION "+g+"########");
             ArrayList<Individu> parent = this.selection();
-            System.out.println(parent.get(0));
+            System.out.println("Le meilleur parcours est : \n"+parent.get(0).toString()+" en "+parent.get(0).getTemps());
             this.reproduction(parent);
         }
     }

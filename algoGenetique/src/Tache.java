@@ -6,6 +6,7 @@ public class Tache {
     public Tache(int numero, int tps, int depart){
         temps = tps;
         tpsDepart = depart;
+        id = numero;
     }
 
     public int getTemps() {
@@ -25,6 +26,6 @@ public class Tache {
 
     @Override
     public String toString(){
-        return "temps = "+this.temps+" Debut : "+this.tpsDepart;
+        return  String.valueOf(this.id); //"temps = "+this.temps+" Debut : "+this.tpsDepart;
     }
 }
