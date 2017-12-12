@@ -9,6 +9,7 @@ public class main {
         Map<String, int[]> contenu= p.lire("../PROB701.TXT");
         RechercheTabou rt = new RechercheTabou(contenu);
         for(int i = 0; i< NBITERATION; i++){
+            System.out.println("#####ITERATION "+i+"#####");
             rt.iteration();
 
         }

@@ -31,7 +31,7 @@ public class Individu implements Comparable {
     public String toString(){
         String affichage ="";
         for (Map.Entry<String, Tache> entry : listeTaches.entrySet()){
-            affichage += "Pos "+entry.getKey()+" : "+entry.getValue().toString()+"-";
+            affichage += entry.getValue().toString()+"-";
         }
         return affichage;
     }

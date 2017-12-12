@@ -21,22 +21,19 @@ public class RechercheTabou {
         for(int i = 0; i<nbTache; i++) //boucle initialisation Taches et reglage
         {
             t[i] = new Tache(i, temps[i], debut[i]);
-        //    System.out.println(t[i].toString());
             for(int j=0; j<nbTache;j++){ //init matrice reglage
                 this.reglages[i][j] = reglage[nbTache*i+j];
-          //      System.out.println( reglage[nbTache*i+j]);
             }
         }
         meilleur = new Solution();
         Solution.setReglages(reglages);
         meilleur.majListe(t);
-        System.out.println(meilleur.toString());
     }
 
     public void iteration(){
         int[] echange = selectionEchange();
         meilleur = new Solution(meilleur.inverser(echange[0], echange[1]));
-        System.out.println(meilleur);
+        System.out.println(meilleur.toString());
     }
     ///
     /// tabous non implémenter
@@ -51,14 +48,11 @@ public class RechercheTabou {
                 if(i!= j){
                     int[] cle = {i, meilleur.getListe_sol().get(String.valueOf(i)).getId()};
                     if( tabou.size()==0){
-                        test(i,j,couple,meilleurTps);
+                        meilleurTps= test(i,j,couple,meilleurTps);
                     }else if(!tabou.containsKey(cle) ) {
-                        test(i,j,couple,meilleurTps);
-                    }else if(!(tabou.get(cle)[0]==j && tabou.get(cle)[1]== meilleur.getListe_sol().get(String.valueOf(j)).getId())){
-                        test(i,j,couple,meilleurTps);
-                    }else
-                    {
-                        System.out.println("esle 2");
+                        meilleurTps = test(i,j,couple,meilleurTps);
+                    }else if(!(tabou.get(cle)[0]==j && tabou.get(cle)[1]== meilleur.getListe_sol().get(String.valueOf(j)).getId())) {
+                        meilleurTps = test(i, j, couple, meilleurTps);
                     }
                 }
             }
@@ -66,7 +60,7 @@ public class RechercheTabou {
         return couple;
     }
 
-    private void test(int pos1, int pos2, int[] couple, int meilleurTps){
+    private int test(int pos1, int pos2, int[] couple, int meilleurTps){
         Solution temp = new Solution(meilleur.inverser(pos1,pos2));
         int diff =  meilleurTps- temp.getTemps();
         if(diff >0){ //si la nouvelle solution dure moins longtemps
@@ -74,5 +68,6 @@ public class RechercheTabou {
             couple[1] = pos2;
             meilleurTps = temp.getTemps();
         }
+        return meilleurTps;
     }
 }

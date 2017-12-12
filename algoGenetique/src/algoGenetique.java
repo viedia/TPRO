@@ -3,7 +3,7 @@ import java.util.Map;
 class algoGenetique
 {
     private Population population;
-    private final int NBGENERATION = 500;
+    private final int NBGENERATION = 1000;
 
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
 
@@ -69,7 +70,10 @@ public class Solution {
 
     @Override
     public String toString(){
-        String affichage ;
-        return liste_sol.toString()+" "+temps;
+        String affichage ="";
+        for (Map.Entry<String, Tache> entry : this.liste_sol.entrySet()){
+            affichage += entry.getValue().toString()+"-";
+        }affichage+= "Duree : "+this.temps;
+        return affichage;
     }
 }
