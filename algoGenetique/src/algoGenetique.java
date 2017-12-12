@@ -3,11 +3,15 @@ import java.util.Map;
 class algoGenetique
 {
     private Population population;
+    private final int NBGENERATION = 10;
 
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
-        ArrayList<Individu> parent = this.selection();
-        this.reproduction(parent);
+        for (int g=0; g<NBGENERATION; g++) {
+            ArrayList<Individu> parent = this.selection();
+            System.out.println(parent.get(0));
+            this.reproduction(parent);
+        }
     }
 
     private void Initialisation(int nb, int[] reglage, int[] temps, int[] debut) {
@@ -34,7 +38,8 @@ class algoGenetique
 
     private ArrayList<Individu> reproduction(ArrayList<Individu> parents){
         ArrayList<Individu> nouveau = population.reproduire(parents);
-        System.out.println(nouveau);
+        population.renouvellementPopulation(nouveau);
+        //System.out.println(nouveau);
         return nouveau;
     }
 
