@@ -3,6 +3,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class RechercheTabou {
+
     private Solution meilleur;
     private int nbTache;
     private int[][] reglages;
@@ -42,22 +43,36 @@ public class RechercheTabou {
     ///
     private int[] selectionEchange(){
         int[] couple = new int[2];
-        Solution temp = null;
+
         int meilleurTps = meilleur.getTemps();
+        HashMap<Integer[], Integer[]> tabou = meilleur.getListe_tabou();
         for(int i=0; i<nbTache-1; i++){
             for(int j=0; j<nbTache; j++){
                 if(i!= j){
-                  //  if(meilleur.)
-                    temp = new Solution(meilleur.inverser(i,j));
-                    int diff =  meilleurTps- temp.getTemps();
-                    if(diff >0){ //si la nouvelle solution dure moins longtemps
-                        couple[0] = i;
-                        couple[1] = j;
-                        meilleurTps = temp.getTemps();
+                    int[] cle = {i, meilleur.getListe_sol().get(String.valueOf(i)).getId()};
+                    if( tabou.size()==0){
+                        test(i,j,couple,meilleurTps);
+                    }else if(!tabou.containsKey(cle) ) {
+                        test(i,j,couple,meilleurTps);
+                    }else if(!(tabou.get(cle)[0]==j && tabou.get(cle)[1]== meilleur.getListe_sol().get(String.valueOf(j)).getId())){
+                        test(i,j,couple,meilleurTps);
+                    }else
+                    {
+                        System.out.println("esle 2");
                     }
                 }
             }
         }
         return couple;
+    }
+
+    private void test(int pos1, int pos2, int[] couple, int meilleurTps){
+        Solution temp = new Solution(meilleur.inverser(pos1,pos2));
+        int diff =  meilleurTps- temp.getTemps();
+        if(diff >0){ //si la nouvelle solution dure moins longtemps
+            couple[0] = pos1;
+            couple[1] = pos2;
+            meilleurTps = temp.getTemps();
+        }
     }
 }
