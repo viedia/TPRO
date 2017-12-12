@@ -6,7 +6,7 @@ public class Population {
     private ArrayList<Individu> membres;
 
     private final int TAILLE = 30; //taille de la population de base
-    private final int NBSELECT = 10; // nombre d'individus qu'on séléctionne après les op
+    private final int NBSELECT = 11; // nombre d'individus qu'on séléctionne après les op
     private final double PROBAMUTATION = 0.3;
 
 
@@ -55,19 +55,30 @@ public class Population {
     public ArrayList<Individu> reproduire(ArrayList<Individu> parents){
         ArrayList<Individu> enfants = new ArrayList<>(parents.size());
         Collections.shuffle(parents);
-        Random rnd = ThreadLocalRandom.current();
-        for(int i=0; i<parents.size();i+=2){ //gerer cas où nb parent impair
-            HashMap<String, Tache> gM = parents.get(i).getListeTaches();
-            HashMap<String, Tache> gP = parents.get(i+1).getListeTaches();
-            int randM = rnd.nextInt(gM.size());
-            int randP = rnd.nextInt(gP.size());
-            Tache[] listeEnfant = this.faireEnfant(gM, randM,randP);
-            enfants.add(i ,new Individu(listeEnfant));
-            listeEnfant = this.faireEnfant(gP, randP,randM);
-            enfants.add(i+1, new Individu(listeEnfant));
+        if(parents.size() % 2 == 0) { //si le nombre de parents est pair
+            for (int i = 0; i < parents.size(); i += 2) { //gerer cas où nb parent impair
+                acte(parents, enfants, i);
+            }
+        }else{
+            for (int i = 0; i < parents.size()-1; i += 2) { //gerer cas où nb parent impair
+                acte(parents, enfants, i);
+            }
         }
         return enfants;
     }
+
+    private void acte(ArrayList<Individu> parents, ArrayList<Individu> enfants, int index){
+        Random rnd = ThreadLocalRandom.current();
+        HashMap<String, Tache> gM = parents.get(index).getListeTaches();
+        HashMap<String, Tache> gP = parents.get(index + 1).getListeTaches();
+        int randM = rnd.nextInt(gM.size());
+        int randP = rnd.nextInt(gP.size());
+        Tache[] listeEnfant = this.faireEnfant(gM, randM, randP);
+        enfants.add(index, new Individu(listeEnfant));
+        listeEnfant = this.faireEnfant(gP, randP, randM);
+        enfants.add(index + 1, new Individu(listeEnfant));
+    }
+
     private Tache[] faireEnfant(HashMap<String, Tache> parent, int pos, int pos2){
         Tache[] res = parent.values().toArray(new Tache[parent.values().size()]);
         res[pos]  =parent.get(String.valueOf(pos2));
