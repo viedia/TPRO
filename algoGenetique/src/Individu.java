@@ -4,13 +4,16 @@ import java.util.Map;
 public class Individu implements Comparable {
     private HashMap<String, Tache> listeTaches = new HashMap<>();
     private int temps;
-    private int[][] reglages;
+    private static int[][] reglages;
 
-    public Individu(Tache[] liste, int[][] reg){
+    public static void setReglages(int[][] reglages) {
+        Individu.reglages = reglages;
+    }
+
+    public Individu(Tache[] liste){
         for(int i=0; i<liste.length; i++){
             listeTaches.put(String.valueOf(i), liste[i]);
         }
-        reglages = reg;
         calculTemp();
     }
 
@@ -36,12 +39,13 @@ public class Individu implements Comparable {
         return temps;
     }
 
+    public HashMap<String, Tache> getListeTaches() {
+        return listeTaches;
+    }
+
     @Override
     public int compareTo(Object o) {
         if(o.getClass().equals(Individu.class)){
-
-            //Nous allons trier sur le nom d'artiste
-
             Individu ind = (Individu) o;
             return Integer.compare(this.temps, ind.getTemps());
         }

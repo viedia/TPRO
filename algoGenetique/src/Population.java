@@ -1,27 +1,24 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Population {
 
     private ArrayList<Individu> membres;
-    private int taille = 15;
-    private final int NBSELECT = 20;
+    private final int TAILLE = 15;
+    private final int NBSELECT = 6;
 
-    public Population(Tache[] taches, int[][] reglages){
-        membres= new ArrayList<>(taille);
-        for(int i=0; i<taille; i++){
+    public Population(Tache[] taches){
+        membres= new ArrayList<>(TAILLE);
+        for(int i=0; i<TAILLE; i++){
             Tache[] copi = taches.clone();
             shuffleArray(copi);
-            membres.add(new Individu(copi, reglages));
+            membres.add(new Individu(copi));
 
         }
     }
 
     // Implementing Fisher–Yates shuffle
-    static void shuffleArray(Tache[] ar)
+    private void shuffleArray(Tache[] ar)
     {
         // If running on Java 6 or older, use `new Random()` on RHS here
         Random rnd = ThreadLocalRandom.current();
@@ -44,25 +41,40 @@ public class Population {
         return affichahge;
     }
 
-    public Individu[] getMeilleurs() {
+    public ArrayList<Individu> getMeilleurs() {
         this.trier();
-        Individu[] meilleurs = new Individu[NBSELECT];
+        ArrayList<Individu> meilleurs = new ArrayList<Individu>(NBSELECT);
         for(int i=0; i<NBSELECT; i++){
-            meilleurs[i] = membres.get(i);
+            meilleurs.add(i, membres.get(i));
         }
         return meilleurs;
     }
 
-    private void trier(){
-  /*      ArrayList<Individu> temp = new ArrayList<>();
-        for(Individu i : membres){
-            temp.add(i);
-        }*/
-      //  System.out.println(temp.toString());
-        Collections.sort(membres);
-//        System.out.println(temp.toString());
-
+    public ArrayList<Individu> reproduire(ArrayList<Individu> parents){
+        ArrayList<Individu> enfants = new ArrayList<>(parents.size());
+        Collections.shuffle(parents);
+        for(int i=0; i<parents.size();i+=2){ //gerer cas où nb parent impair
+            HashMap<String, Tache> gM = parents.get(i).getListeTaches();
+            HashMap<String, Tache> gP = parents.get(i+1).getListeTaches();
+            int randM = (int)Math.random() * gM.size()+1;
+            int randP = (int)Math.random() * gP.size()+1;
+            Tache[] listeEnfant = this.faireEnfant(gM, randM,randP);
+            enfants.add(i ,new Individu(listeEnfant));
+            listeEnfant = this.faireEnfant(gP, randP,randM);
+            enfants.add(i+1, new Individu(listeEnfant));
+        }
+        return enfants;
     }
+    private Tache[] faireEnfant(HashMap<String, Tache> parent, int pos, int pos2){
+        Tache[] res = parent.values().toArray(new Tache[parent.values().size()]);
+        res[pos]  =parent.get(String.valueOf(pos2));
+        res[pos2] = parent.get(String.valueOf(pos));
+        return res;
+    }
+    private void trier(){
+        Collections.sort(membres);
+    }
+
 
 }
 

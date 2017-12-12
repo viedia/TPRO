@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 class algoGenetique
 {
@@ -7,11 +8,13 @@ class algoGenetique
 
     public algoGenetique(Map<String, int[]> infos) {
         this.Initialisation(infos.get("nombre")[0],infos.get("reglage"),infos.get("temps"),infos.get("debut") );
-        this.selection();
+        ArrayList<Individu> parent = this.selection();
+        this.reproduction(parent);
     }
 
     private void Initialisation(int nb, int[] reglage, int[] temps, int[] debut) {
         int[][] reglages = new int[nb][nb];
+        Individu.setReglages(reglages);
         Tache[] t = new Tache[nb];
         for(int i = 0; i<nb; i++) //boucle initialisation Taches et reglage
         {
@@ -22,13 +25,19 @@ class algoGenetique
                 //      System.out.println( reglage[nbTache*i+j]);
             }
         }
-        population = new Population(t, reglages);
+        population = new Population(t);
         //System.out.println(population.toString());
     }
 
-    private Individu[] selection(){
-        Individu[] meilleurs =  population.getMeilleurs();
+    private ArrayList<Individu> selection(){
+        ArrayList<Individu> meilleurs =  population.getMeilleurs();
         return meilleurs;
+    }
+
+    private ArrayList<Individu> reproduction(ArrayList<Individu> parents){
+        ArrayList<Individu> nouveau = population.reproduire(parents);
+        System.out.println(nouveau);
+        return nouveau;
     }
 
 }
