@@ -7,7 +7,6 @@ public class Tache {
         temps = tps;
         tpsDepart = depart;
         id=numero;
-
     }
 
     public int getTemps() {
