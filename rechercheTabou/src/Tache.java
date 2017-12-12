@@ -23,6 +23,6 @@ public class Tache {
 
     @Override
     public String toString(){
-        return "temps = "+this.temps+" Debut : "+this.tpsDepart;
+        return String.valueOf(id);//"temps = "+this.temps+" Debut : "+this.tpsDepart;
     }
 }

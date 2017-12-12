@@ -13,9 +13,6 @@ public class Solution {
 
     private static int[][] reglages;
 
-    public Solution(int[][] reglages) {
-    }
-
     public Solution(){
 
         liste_sol = new HashMap<>();
@@ -47,7 +44,7 @@ public class Solution {
     }
 
     public HashMap<String, Tache> inverser(int num1, int num2){
-        HashMap<String, Tache> nouvel = liste_sol;
+        HashMap<String, Tache> nouvel = (HashMap<String, Tache>)liste_sol.clone();
         Tache temp = nouvel.get(String.valueOf(num1));
         nouvel.put(String.valueOf(num1), nouvel.get(String.valueOf(num2)));
         nouvel.put(String.valueOf(num2), temp);

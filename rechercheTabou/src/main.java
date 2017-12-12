@@ -3,12 +3,15 @@ import java.util.Map;
 
 public class main {
 
+    private static final int NBITERATION = 5;
     public static void main(String[] args) {
         Parseur p = new Parseur();
         Map<String, int[]> contenu= p.lire("../PROB401.TXT");
         RechercheTabou rt = new RechercheTabou(contenu);
-        rt.iteration();
-        rt.iteration();
+        for(int i = 0; i< NBITERATION; i++){
+            rt.iteration();
+
+        }
     }
 
 

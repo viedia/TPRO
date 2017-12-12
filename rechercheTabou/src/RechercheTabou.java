@@ -35,7 +35,7 @@ public class RechercheTabou {
     public void iteration(){
         int[] echange = selectionEchange();
         meilleur = new Solution(meilleur.inverser(echange[0], echange[1]));
-        System.out.println(meilleur.getTemps());
+        System.out.println(meilleur);
     }
     ///
     /// tabous non implémenter
@@ -47,6 +47,7 @@ public class RechercheTabou {
         for(int i=0; i<nbTache-1; i++){
             for(int j=0; j<nbTache; j++){
                 if(i!= j){
+                  //  if(meilleur.)
                     temp = new Solution(meilleur.inverser(i,j));
                     int diff =  meilleurTps- temp.getTemps();
                     if(diff >0){ //si la nouvelle solution dure moins longtemps
